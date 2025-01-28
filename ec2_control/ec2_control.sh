@@ -35,10 +35,16 @@ ec2_action() {
   fi
 }
 
+# Function to list all EC2 instances
+list_instances() {
+  echo "Fetching the list of EC2 instances..."
+  aws ec2 describe-instances --query "Reservations[*].Instances[*].[InstanceId,State.Name,InstanceType,PublicIpAddress]" --output table
+}
+
 # Main script logic
-if [ $# -ne 2 ]; then
-  echo "Usage: $0 <action> <instance_id>"
-  echo "Actions: start, stop, reboot, terminate"
+if [ $# -lt 1 ]; then
+  echo "Usage: $0 <action> [<instance_id>]"
+  echo "Actions: start, stop, reboot, terminate, list"
   exit 1
 fi
 
@@ -50,11 +56,17 @@ check_aws_configuration
 
 case $action in
   start|stop|reboot|terminate)
+    if [ -z "$instance_id" ]; then
+      echo "Error: Instance ID is required for action $action."
+      exit 1
+    fi
     ec2_action "$action" "$instance_id"
     ;;
+  list)
+    list_instances
+    ;;
   *)
-    echo "Invalid action: $action. Valid actions are: start, stop, reboot, terminate."
+    echo "Invalid action: $action. Valid actions are: start, stop, reboot, terminate, list."
     exit 1
     ;;
 esac
-
