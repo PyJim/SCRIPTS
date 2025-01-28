@@ -7,7 +7,7 @@ This is a Bash script to manage AWS EC2 instances using the AWS CLI. The script 
 ## Features
 - **AWS CLI Configuration Check**: Ensures the AWS CLI is configured before performing any operations.
 - **Password Verification**: Prompts for your system password to ensure authorized use of the script.
-- **EC2 Instance Actions**: Supports `start`, `stop`, `reboot`, and `terminate` actions for EC2 instances.
+- **EC2 Instance Actions**: Supports `start`, `stop`, `reboot`, `terminate`, and `list` actions for EC2 instances.
 - **Error Handling**: Provides clear error messages in case of invalid inputs, incorrect configuration, or failed operations.
 
 ---
@@ -23,7 +23,7 @@ This is a Bash script to manage AWS EC2 instances using the AWS CLI. The script 
 
 ### Syntax
 ```bash
-./ec2_management.sh <action> <instance_id>
+./ec2_control.sh <action> <instance_id>
 ```
 
 ### Arguments
@@ -32,19 +32,24 @@ This is a Bash script to manage AWS EC2 instances using the AWS CLI. The script 
    - `stop`
    - `reboot`
    - `terminate`
+   - `list`
 2. `<instance_id>`: The ID of the EC2 instance (e.g., `i-0abcdef1234567890`).
 
 ### Example
 Start an EC2 instance:
 ```bash
-./ec2_management.sh start i-0abcdef1234567890
+./ec2_control.sh start i-0abcdef1234567890
 ```
 
 Stop an EC2 instance:
 ```bash
-./ec2_management.sh stop i-0abcdef1234567890
+./ec2_control.sh stop i-0abcdef1234567890
 ```
 
+List all EC2 instances:
+```bash
+./ec2_control.sh list
+```
 ---
 
 ## Script Workflow
